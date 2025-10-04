@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>じゃんけん</title>
+  <style>
+    #computerResult,
+    #myResult,
+    #judgeResult {
+      height: 30px;
+      /* ← 空のときもこの高さ */
+      margin: 5px 0;
+      font-size: 1.2em;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f8ff;
+      font-family: "Arial", sans-serif;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333366;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    #judgeResult {
+      font-weight: bold;
+      font-size: 1.3em;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    button {
+      font-size: 1.1em;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #6495ed;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #4169e1;
+    }
+
+    .handContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>じゃんけん</h1>
+    <div class="handContainer">
+      <p id="computerResult"></p>
+      <img id="computerImage" src="" width="100">
+    </div>
+    <div class="handContainer">
+      <p id="myResult"></p>
+      <img id="myImage" src="" width="100">
+    </div>
+    <p id="judgeResult"></p>
+    <button id='gu'>グー</button>
+    <button id='tyoki'>チョキ</button>
+    <button id='pa'>パー</button>
+  </div>
+</body>
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // ここに処理を書く
+    console.log('DOMの読み込みが完了しました');
+
+    const computerResult = document.querySelector(`#computerResult`);
+    const myResult = document.querySelector(`#myResult`);
+    const judgeResult = document.querySelector(`#judgeResult`);
+    const gu = document.querySelector(`#gu`);
+    const tyoki = document.querySelector(`#tyoki`);
+    const pa = document.querySelector(`#pa`);
+    const hands = [`グー`, `チョキ`, `パー`];
+    let myHand = ``;
+    let computerHand = ``;
+
+    gu.addEventListener(`click`, function () {
+      myHand = hands[0];
+      myResult.textContent = `自分：${myHand}`;
+      getComputerHand();
+      setHandImage(myImage, myHand);
+      getJudge(myHand, computerHand);
+    });
+
+    tyoki.addEventListener(`click`, function () {
+      myHand = hands[1];
+      myResult.textContent = `自分：${myHand}`;
+      getComputerHand();
+      setHandImage(myImage, myHand);
+      getJudge(myHand, computerHand);
+    });
+
+    pa.addEventListener(`click`, function () {
+      myHand = hands[2];
+      myResult.textContent = `自分：${myHand}`;
+      getComputerHand();
+      setHandImage(myImage, myHand);
+      getJudge(myHand, computerHand);
+    });
+
+
+    function getComputerHand() {
+      const index = Math.floor(Math.random() * hands.length);
+      computerHand = hands[index];
+      computerResult.textContent = `相手：${computerHand}`;
+      setHandImage(computerImage, computerHand);
+    };
+
+    function getJudge(myHand, computerHand) {
+      if (myHand === computerHand) {
+        return judgeResult.textContent = `あいこ`;
+      } else if (
+        (myHand === "グー" && computerHand === "チョキ") ||
+        (myHand === "チョキ" && computerHand === "パー") ||
+        (myHand === "パー" && computerHand === "グー")
+      ) {
+        return judgeResult.textContent = "あなたの勝ち！";
+      } else {
+        return judgeResult.textContent = "あなたの負け…";
+      };
+
+    };
+
+    const computerImage = document.querySelector(`#computerImage`);
+    const myImage = document.querySelector(`#myImage`);
+
+    function setHandImage(imageElement, hand) {
+      if (hand === `グー`) {
+        imageElement.src = `./gu.webp`;
+      } else if (hand === `チョキ`) {
+        imageElement.src = `./tyoki.webp`;
+      } else if (hand === `パー`) {
+        imageElement.src = `./pa.webp`;
+      }
+    };
+
+  });
+</script>
+
+</html>
